@@ -136,14 +136,17 @@ static char launchNotificationKey;
     }
     if ([message rangeOfString:@"http://"].length != NSNotFound||[message rangeOfString:@"https://"].length != NSNotFound) {
         NSArray *array = [message componentsSeparatedByString:@"'"];
-        NSString *server_url = array[1];
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        
-        [defaults setObject:server_url forKey:@"server-url"];
-        
-        [defaults synchronize];
-        [self getServerURLFromLocalDataBase];
-        [self.viewController.webView reload];
+        if (array&&array.length>1) {
+            
+            NSString *server_url = array[1];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
+            [defaults setObject:server_url forKey:@"server-url"];
+            
+            [defaults synchronize];
+            [self getServerURLFromLocalDataBase];
+            [self.viewController.webView reload];
+        }
     }
 }
 
